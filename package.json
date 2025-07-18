@@ -1,6 +1,7 @@
 {
-  "name": "vant-vue3-starter",
-  "version": "1.0.0",
+  "name": "chelaile-mobile-design-system",
+  "version": "0.1.0",
+  "description": "車來了移動端設計系統 - 基於 Vue 3 + Vant 4 + Tailwind CSS",
   "type": "module",
   "private": true,
   "scripts": {
