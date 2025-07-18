@@ -15,7 +15,9 @@
     "build-storybook": "storybook build",
     "test": "vitest",
     "test:watch": "vitest watch",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "create:component": "node scripts/create-component.js",
+    "generate:component": "node scripts/create-component.js"
   },
   "dependencies": {
     "@iconify/vue": "^5.0.0",

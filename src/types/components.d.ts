@@ -8,9 +8,14 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AudioPlayer: typeof import('./../components/AudioPlayer.vue')['default']
+    Button: typeof import('./../components/button/Button.vue')['default']
+    CommonAppHeader: typeof import('./../components/common-app-header/CommonAppHeader.vue')['default']
+    CommonAppTabBar: typeof import('./../components/common-app-tab-bar/CommonAppTabBar.vue')['default']
+    CommonSearchBar: typeof import('./../components/common-search-bar/CommonSearchBar.vue')['default']
     EmptyState: typeof import('./../components/EmptyState.vue')['default']
     GeoStatusCard: typeof import('./../components/geo-status-card/GeoStatusCard.vue')['default']
     Loading: typeof import('./../components/Loading.vue')['default']
+    PagesHome: typeof import('./../components/pages-home/PagesHome.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     StationCard: typeof import('./../components/station-card/StationCard.vue')['default']
