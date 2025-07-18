@@ -47,72 +47,144 @@
 
 | 組件 | 描述 |
 |------|------|
-| `GeoStatusCard` | 定位狀態卡片 |
-| `StationCard` | 站點信息卡片 |
+| `GeoStatusCard` | 定位狀態卡片，顯示當前定位狀態和權限信息 |
+| `StationCard` | 站點卡片，顯示站點信息和到站預估 |
+| `RouteBadge` | 路線標籤，用於顯示路線號碼和類型 |
+| `BusArrivalTime` | 到站時間顯示組件 |
+| `MapControl` | 地圖控制組件 |
 | `TabBar` | 底部導航欄 |
-| `MapOverlayPOI` | 地圖地點浮層 |
-| `RoutePlanner` | 路線規劃組件 |
-| `NewsFeedCard` | 新聞資訊卡片 |
+| `SearchBar` | 搜索欄組件 |
+| `TimeTable` | 時刻表組件 |
+| `RouteList` | 路線列表組件 |
+| `Notification` | 通知提示組件 |
 
-## 🚀 快速開始
-
-### 安裝
+## 📦 安裝
 
 ```bash
-# 克隆倉庫
-git clone https://github.com/your-username/chelaile-mobile-design-system.git
-
-# 進入項目目錄
-cd chelaile-mobile-design-system
-
 # 安裝依賴
 npm install
 
-# 啟動開發服務器
+# 開發模式
 npm run dev
-```
 
-### 構建
-
-```bash
-# 構建生產版本
+# 生產構建
 npm run build
+
+# 預覽生產版本
+npm run preview
+
+# 運行測試
+npm run test
+
+# 運行 Storybook
+npm run storybook
 ```
 
-## 📁 項目結構
+## 🛠️ 組件使用示例
 
+### StationCard 站點卡片
+
+```vue
+<template>
+  <StationCard
+    :station-name="'市政府站'"
+    :distance="'320m'"
+    :bus-list="[
+      { routeId: '1', routeName: '32', arrivalTime: '2分鐘', isArriving: true },
+      { routeId: '2', routeName: '262', arrivalTime: '5分鐘' },
+      { routeId: '3', routeName: '藍26', arrivalTime: '8分鐘' },
+    ]"
+    show-action
+    @action="handleStationAction"
+  />
+</template>
+
+<script setup>
+import { StationCard } from './components';
+
+const handleStationAction = () => {
+  console.log('查看站點詳情');
+};
+</script>
 ```
-chelaile-mobile-design-system/
-├── src/
-│   ├── assets/         # 靜態資源
-│   ├── components/     # 公共組件
-│   ├── composables/    # 組合式函數
-│   ├── styles/         # 全局樣式
-│   ├── utils/          # 工具函數
-│   └── main.ts         # 入口文件
-├── public/            # 公共資源
-├── .env               # 環境變量
-└── vite.config.ts     # Vite 配置
+
+### GeoStatusCard 定位狀態卡片
+
+```vue
+<template>
+  <GeoStatusCard
+    title="當前位置"
+    status="success"
+    status-text="定位成功"
+    :show-action="true"
+    action-text="重新定位"
+    @action="handleRelocation"
+  />
+</template>
+
+<script setup>
+import { GeoStatusCard } from './components';
+
+const handleRelocation = () => {
+  console.log('重新定位');};
+</script>
 ```
 
-## 🧪 測試
+## 🎨 主題定制
 
-```bash
-# 運行單元測試
-npm run test:unit
+本設計系統支持通過修改 `tailwind.config.js` 中的主題變量來進行主題定制。
 
-# 運行組件測試
-npm run test:component
+```javascript
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: '#2D6DFF',
+          light: '#E6EEFF',
+          dark: '#1A4DCC',
+        },
+        // 其他自定義顏色...
+      },
+    },
+  },
+};
 ```
+
+## 📝 開發規範
+
+### 組件開發
+
+1. 組件目錄結構：
+   ```
+   components/
+   ├── ComponentName/
+   │   ├── ComponentName.vue    # 組件源碼
+   │   ├── index.ts             # 組件導出
+   │   ├── types.ts             # 類型定義
+   │   ├── ComponentName.stories.ts  # Storybook 文檔
+   │   └── __tests__/           # 單元測試
+   │       └── ComponentName.test.ts
+   ```
+
+2. 組件命名：使用 PascalCase，如 `StationCard`
+3. Props 命名：使用 camelCase
+4. 事件命名：使用 kebab-case，如 `@click-action`
+
+### 代碼提交
+
+- 使用 Conventional Commits 規範
+- 提交前運行 `npm run lint` 和 `npm run test`
 
 ## 🤝 貢獻指南
 
-1. Fork 本倉庫
-2. 創建您的功能分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交您的更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 開啟一個 Pull Request
+歡迎提交 Issue 和 PR，請確保：
+
+1. 代碼符合項目規範
+2. 添加適當的測試
+3. 更新相關文檔
 
 ## 📄 許可證
 
-[MIT](LICENSE) © 2025 Chelaile Mobile Team
+MIT

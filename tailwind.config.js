@@ -1,20 +1,21 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
     "./index.html",
-    "./src/**/*.{vue,js,jsx,ts,tsx}",
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        primary: '#2D6DFF',
-        warning: '#FF4D4F',
-        background: '#F7F8FA',
+        primary: 'rgb(var(--color-primary) / <alpha-value>)',
+        warning: 'rgb(var(--color-warning) / <alpha-value>)',
+        background: 'rgb(var(--color-background) / <alpha-value>)',
         text: {
-          primary: '#1F2329',
-          secondary: '#8A8F99',
+          primary: 'rgb(var(--color-text-primary) / <alpha-value>)',
+          secondary: 'rgb(var(--color-text-secondary) / <alpha-value>)',
         },
-        border: '#E5E6EB',
+        border: 'rgb(var(--color-border) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['Noto Sans TC', 'sans-serif'],
@@ -31,5 +32,8 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+  ],
 }

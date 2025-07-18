@@ -22,7 +22,13 @@
       "./src/types"
     ],
     "allowJs": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": false,
+    "noImplicitThis": true,
+    "alwaysStrict": true
   },
   "include": [
     "src/**/*.ts",

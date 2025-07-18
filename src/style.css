@@ -4,7 +4,51 @@
 
 /* 自定義基礎樣式 */
 @layer base {
+  :root {
+    --color-primary: 45, 109, 255;
+    --color-warning: 255, 77, 79;
+    --color-background: 247, 248, 250;
+    --color-text-primary: 31, 35, 41;
+    --color-text-secondary: 138, 143, 153;
+    --color-border: 229, 230, 235;
+  }
+
+  .dark {
+    --color-background: 17, 24, 39;
+    --color-text-primary: 229, 231, 235;
+    --color-text-secondary: 156, 163, 175;
+    --color-border: 55, 65, 81;
+  }
+
   body {
-    @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
+    @apply bg-background text-text-primary font-sans antialiased;
+  }
+
+  /* 自定義滾動條 */
+  ::-webkit-scrollbar {
+    @apply w-1.5 h-1.5;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-500;
+  }
+}
+
+/* 自定義組件樣式 */
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white px-4 py-2 rounded-button font-medium hover:bg-opacity-90 transition-colors;
+  }
+  
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-card shadow-sm p-4;
   }
 }
