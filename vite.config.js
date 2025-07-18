@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import path from 'path';
+import { fileURLToPath, URL } from 'node:url';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { VantResolver } from 'unplugin-vue-components/resolvers';
@@ -32,10 +32,13 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '~': path.resolve(__dirname, './'),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '~': fileURLToPath(new URL('./', import.meta.url))
     },
-    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
+    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue']
+  },
+  optimizeDeps: {
+    include: ['vue', 'vue-router', '@vueuse/core']
   },
   css: {
     preprocessorOptions: {

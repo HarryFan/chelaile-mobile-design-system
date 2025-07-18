@@ -10,46 +10,15 @@ import './style.css';
 import components from '@/components';
 
 // Vant 4 按需引入
-import {
-  // 基礎組件
-  Button,
-  Cell,
-  CellGroup,
-  Icon,
-  Image as VanImage,
-  Loading,
-  Overlay,
-  Popup,
-  Swipe,
-  SwipeItem,
-  Tabbar,
-  TabbarItem,
-  Tabs,
-  Tab,
-  // 表單組件
-  Field,
-  Form,
-  // 反饋組件
-  Toast,
-  Dialog,
-  Notify,
-  // 展示組件
-  Tag,
-  Divider,
-  Empty,
-  List,
-  // 導航組件
-  NavBar,
-  Tabbar as VanTabbar,
-  TabbarItem as VanTabbarItem,
-  // 業務組件
-  SwipeCell,
-  PullRefresh,
-  Sticky,
-} from 'vant';
+import { Button, Icon } from 'vant';
+import { showToast, showDialog, showNotify } from 'vant';
 
-// 引入 Vant 樣式
-import 'vant/lib/index.css';
+// 引入樣式
+import 'vant/es/button/style';
+import 'vant/es/icon/style';
+import 'vant/es/toast/style';
+import 'vant/es/dialog/style';
+import 'vant/es/notify/style';
 
 // 創建 Vue 實例
 const app = createApp(App);
@@ -58,45 +27,13 @@ const app = createApp(App);
 app.use(components);
 
 // 全局註冊 Vant 組件
-const components = [
-  // 基礎組件
+const vantComponents = [
   Button,
-  Cell,
-  CellGroup,
   Icon,
-  VanImage,
-  Loading,
-  Overlay,
-  Popup,
-  Swipe,
-  SwipeItem,
-  Tabbar,
-  TabbarItem,
-  Tabs,
-  Tab,
-  // 表單組件
-  Field,
-  Form,
-  // 反饋組件
-  Toast,
-  Dialog,
-  Notify,
-  // 展示組件
-  Tag,
-  Divider,
-  Empty,
-  List,
-  // 導航組件
-  NavBar,
-  VanTabbar,
-  VanTabbarItem,
-  // 業務組件
-  SwipeCell,
-  PullRefresh,
-  Sticky,
+  // 添加其他需要的 Vant 組件
 ];
 
-components.forEach(component => {
+vantComponents.forEach(component => {
   app.use(component);
 });
 
@@ -108,9 +45,9 @@ app.use(pinia);
 app.use(router);
 
 // 全局錯誤處理
-app.config.errorHandler = (err: unknown, vm, info) => {
+app.config.errorHandler = (err: unknown, vm: any, info: string) => {
   console.error('Global Error:', err);
-  Toast.fail({
+  showToast({
     message: '發生錯誤，請稍後再試',
     position: 'bottom',
   });
@@ -119,21 +56,23 @@ app.config.errorHandler = (err: unknown, vm, info) => {
 // 全局屬性
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $toast: typeof Toast;
-    $dialog: typeof Dialog;
-    $notify: typeof Notify;
+    $toast: typeof showToast;
+    $dialog: typeof showDialog;
+    $notify: typeof showNotify;
   }
 }
 
-app.config.globalProperties.$toast = Toast;
-app.config.globalProperties.$dialog = Dialog;
-app.config.globalProperties.$notify = Notify;
+// 添加全局屬性
+const globalProperties = app.config.globalProperties;
+globalProperties.$toast = showToast;
+globalProperties.$dialog = showDialog;
+globalProperties.$notify = showNotify;
 
 // 掛載應用
 app.mount('#app');
 
 // 開發環境下啟用性能追蹤
-if (process.env.NODE_ENV === 'development') {
+if (import.meta.env.DEV) {
   // 延遲加載性能監控
   setTimeout(() => {
     import('./utils/performance').then(({ setupPerformance }) => {

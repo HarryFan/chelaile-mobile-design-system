@@ -1,5 +1,11 @@
 # 車來了移動端設計系統 - 開發待辦清單
 
+## ✅ 已完成項目
+- [x] 設計系統檔案整合
+  - [x] 合併 chelaile-design-system.json 和 chelaile-mobile-design-system.json
+  - [x] 統一設計 tokens 和組件定義
+  - [x] 建立完整的組件規格文檔
+
 ## 🚧 核心功能開發
 - [ ] 設置專案基礎架構
   - [ ] 初始化 Vue 3 專案

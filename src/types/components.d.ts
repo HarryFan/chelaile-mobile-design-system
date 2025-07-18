@@ -14,5 +14,12 @@ declare module 'vue' {
     Loading: typeof import('./../components/Loading.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    VanButton: typeof import('vant/es')['Button']
+    VanDialog: typeof import('vant/es')['Dialog']
+    VanIcon: typeof import('vant/es')['Icon']
+    VanLoading: typeof import('vant/es')['Loading']
+    VanTabbar: typeof import('vant/es')['Tabbar']
+    VanTabbarItem: typeof import('vant/es')['TabbarItem']
+    VanToast: typeof import('vant/es')['Toast']
   }
 }
