@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "name": "chelaile-design-system",
+    "version": "1.0",
+    "platform": "mobile",
+    "techStack": [
+      "vue3",
+      "tailwindcss",
+      "vant4"
+    ],
+    "font": "Noto Sans TC",
+    "primaryColor": "#2D6DFF",
+    "warningColor": "#FF4D4F"
+  },
+  "tokens": {
+    "color": {
+      "primary": "#2D6DFF",
+      "warning": "#FF4D4F",
+      "background": "#F7F8FA",
+      "textPrimary": "#1F2329",
+      "textSecondary": "#8A8F99",
+      "border": "#E5E6EB"
+    },
+    "radius": {
+      "card": "12px",
+      "button": "9999px"
+    },
+    "typography": {
+      "fontFamily": "Noto Sans TC, sans-serif",
+      "body": "14px",
+      "title": "16px",
+      "caption": "12px"
+    },
+    "spacing": {
+      "xs": "4px",
+      "sm": "8px",
+      "md": "16px",
+      "lg": "24px"
+    }
+  },
+  "components": {
+    "GeoStatusCard": {
+      "description": "定位成功畫面卡片",
+      "structure": [
+        "Title",
+        "StatusText",
+        "CityIcon"
+      ]
+    },
+    "StationCard": {
+      "description": "附近站點資訊卡",
+      "structure": [
+        "StationName",
+        "Distance",
+        "BusList"
+      ]
+    },
+    "TabBar": {
+      "description": "底部導覽列",
+      "items": [
+        "首頁",
+        "路線規劃",
+        "發現",
+        "我的"
+      ]
+    },
+    "MapOverlayPOI": {
+      "description": "地圖上的 Bottom Sheet 地點資訊",
+      "structure": [
+        "PlaceName",
+        "DistanceText",
+        "CTAButton"
+      ]
+    },
+    "RoutePlanner": {
+      "description": "起訖地圖路線規劃",
+      "structure": [
+        "起點",
+        "終點",
+        "交通模式切換"
+      ]
+    },
+    "NewsFeedCard": {
+      "description": "新聞圖文資訊卡",
+      "structure": [
+        "ImageList",
+        "TitleText",
+        "CategoryTag"
+      ]
+    }
+  },
+  "layoutPatterns": {
+    "mapWithBottomSheet": {
+      "description": "地圖上方展示卡片資訊",
+      "structure": [
+        "MapView",
+        "BottomSheet",
+        "CTA"
+      ]
+    },
+    "scrollableListWithStickyHeader": {
+      "description": "列表下滑搭配固定 header",
+      "structure": [
+        "Header",
+        "ScrollableContent"
+      ]
+    }
+  }
+}
