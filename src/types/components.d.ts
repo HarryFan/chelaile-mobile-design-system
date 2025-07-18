@@ -14,6 +14,7 @@ declare module 'vue' {
     CommonSearchBar: typeof import('./../components/common-search-bar/CommonSearchBar.vue')['default']
     EmptyState: typeof import('./../components/EmptyState.vue')['default']
     GeoStatusCard: typeof import('./../components/geo-status-card/GeoStatusCard.vue')['default']
+    LayoutsMainLayout: typeof import('./../components/layouts-main-layout/LayoutsMainLayout.vue')['default']
     Loading: typeof import('./../components/Loading.vue')['default']
     PagesHome: typeof import('./../components/pages-home/PagesHome.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

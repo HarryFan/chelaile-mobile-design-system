@@ -19,7 +19,6 @@ export default defineConfig({
         'pinia',
         '@vueuse/core',
       ],
-      dts: 'src/types/auto-imports.d.ts',
       eslintrc: {
         enabled: true,
       },
@@ -27,7 +26,6 @@ export default defineConfig({
     // 自動導入 Vant 組件
     Components({
       resolvers: [VantResolver()],
-      dts: 'src/types/components.d.ts',
     }),
   ],
   resolve: {

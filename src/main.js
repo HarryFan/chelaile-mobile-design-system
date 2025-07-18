@@ -10,8 +10,15 @@ import './style.css';
 import components from '@/components';
 
 // Vant 4 按需引入
-import { Button, Icon } from 'vant';
-import { showToast, showDialog, showNotify } from 'vant';
+import { 
+  Button, 
+  Icon, 
+  Tabbar, 
+  TabbarItem, 
+  showToast, 
+  showDialog,
+  showNotify
+} from 'vant';
 
 // 引入樣式
 import 'vant/es/button/style';
@@ -19,6 +26,8 @@ import 'vant/es/icon/style';
 import 'vant/es/toast/style';
 import 'vant/es/dialog/style';
 import 'vant/es/notify/style';
+import 'vant/es/tabbar/style';
+import 'vant/es/tabbar-item/style';
 
 // 創建 Vue 實例
 const app = createApp(App);
@@ -30,7 +39,8 @@ app.use(components);
 const vantComponents = [
   Button,
   Icon,
-  // 添加其他需要的 Vant 組件
+  Tabbar,
+  TabbarItem
 ];
 
 vantComponents.forEach(component => {
@@ -45,28 +55,32 @@ app.use(pinia);
 app.use(router);
 
 // 全局錯誤處理
-app.config.errorHandler = (err: unknown, vm: any, info: string) => {
+app.config.errorHandler = (err, vm, info) => {
   console.error('Global Error:', err);
   showToast({
     message: '發生錯誤，請稍後再試',
     position: 'bottom',
-  });
+  });  
 };
 
-// 全局屬性
-declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
-    $toast: typeof showToast;
-    $dialog: typeof showDialog;
-    $notify: typeof showNotify;
-  }
-}
-
 // 添加全局屬性
-const globalProperties = app.config.globalProperties;
-globalProperties.$toast = showToast;
-globalProperties.$dialog = showDialog;
-globalProperties.$notify = showNotify;
+app.config.globalProperties.$toast = showToast;
+app.config.globalProperties.$dialog = showDialog;
+app.config.globalProperties.$notify = showNotify;
+
+// 全局指令示例
+app.directive('focus', {
+  mounted(el) {
+    el.focus();
+  },
+});
+
+// 全局混入示例
+app.mixin({
+  created() {
+    // 可以在這裡添加全局混入的邏輯
+  },
+});
 
 // 掛載應用
 app.mount('#app');
