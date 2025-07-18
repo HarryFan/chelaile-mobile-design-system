@@ -169,6 +169,125 @@
 > - 🚧 開發中：正在開發中的組件
 > - ⏳ 計劃中：計劃開發的組件
 
+## 🔧 組件開發指南
+
+### 創建新組件
+
+1. 使用腳本創建組件模板：
+```bash
+npm run create:component ComponentName
+```
+
+2. 組件目錄結構：
+```
+components/
+└── ComponentName/
+    ├── ComponentName.vue    # 組件源碼
+    ├── index.ts             # 組件導出
+    ├── types.ts             # 類型定義
+    ├── ComponentName.stories.ts  # Storybook 文檔
+    └── __tests__/           # 單元測試
+        └── ComponentName.test.ts
+```
+
+### 組件規範
+
+1. **Props 定義**
+   - 使用 TypeScript 接口明確定義 props 類型
+   - 為每個 prop 添加註釋說明用途
+   ```typescript
+   interface Props {
+     /** 按鈕類型 */
+     type?: 'primary' | 'success' | 'warning' | 'danger'
+     /** 是否禁用 */
+     disabled?: boolean
+   }
+   ```
+
+2. **事件處理**
+   - 使用 `kebab-case` 命名自定義事件
+   - 為事件提供完整的類型定義
+   ```typescript
+   const emit = defineEmits<{
+     (e: 'update:modelValue', value: string): void
+     (e: 'search', value: string): void
+   }>()
+   ```
+
+3. **樣式規範**
+   - 使用 Tailwind 工具類優先
+   - 自定義樣式使用 CSS 變量
+   - 響應式設計使用 Tailwind 斷點前綴
+
+## 🎨 主題定製
+
+### 顏色主題
+
+在 `tailwind.config.js` 中擴展主題：
+
+```javascript
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          DEFAULT: 'var(--color-primary)'
+        },
+        // 其他自定義顏色...
+      },
+      boxShadow: {
+        'card': '0 4px 12px rgba(0, 0, 0, 0.05)'
+      }
+    }
+  }
+}
+```
+
+### 暗黑模式
+
+1. 在 `tailwind.config.js` 中啟用暗黑模式：
+```javascript
+module.exports = {
+  darkMode: 'class', // 或 'media'
+  // ...
+}
+```
+
+2. 在 CSS 中定義暗黑模式變量：
+```css
+:root {
+  --color-bg: #ffffff;
+  --color-text: #1f2329;
+  /* 其他亮色變量 */
+}
+
+.dark {
+  --color-bg: #1a1d24;
+  --color-text: #ffffff;
+  /* 其他暗色變量 */
+}
+```
+
+### 響應式設計
+
+使用 Tailwind 的斷點前綴：
+
+```html
+<div class="w-full md:w-1/2 lg:w-1/3">
+  <!-- 移動端全寬，平板1/2寬，桌面1/3寬 -->
+</div>
+```
+
+#### 斷點參考
+| 斷點 | 寬度 | 用途 |
+|------|------|------|
+| `sm` | 640px | 小屏幕 |
+| `md` | 768px | 平板 |
+| `lg` | 1024px | 筆記本 |
+| `xl` | 1280px | 桌面 |
+| `2xl` | 1536px | 大屏幕 |
+
 ## 📦 安裝
 
 ```bash
