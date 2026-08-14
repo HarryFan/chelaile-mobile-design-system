@@ -31,7 +31,7 @@ const routes = [
       {
         path: 'discover',
         name: 'discover',
-        component: () => import('@/views/Discover/index.vue'),
+        component: () => import('@/views/Discover.vue'),
         meta: { title: '發現', showTabBar: true, icon: 'compass' }
       },
       {
