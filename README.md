@@ -1,5 +1,9 @@
 # Chelaile 移動端設計系統
 
+[![CI](https://github.com/HarryFan/chelaile-mobile-design-system/actions/workflows/ci.yml/badge.svg)](https://github.com/HarryFan/chelaile-mobile-design-system/actions/workflows/ci.yml) [![Storybook](https://img.shields.io/badge/Storybook-online-ff4785?logo=storybook&logoColor=white)](https://harryfan.github.io/chelaile-mobile-design-system/)
+
+> **怎麼讀這個 repo**：`COMPONENT-SPEC.md` 是 API 契約；`AGENTS.md` 是給 AI 與人的作業規則；`docs/DEVLOG.md` 記每一輪的起點診斷、決策、踩坑與 **AI 判斷錯在哪、怎麼發現**；`docs/ENGINEERING.md` 講架構、測試、資安、部署與哪些事一定要人決定。Storybook 線上版：https://harryfan.github.io/chelaile-mobile-design-system/
+
 [![Vue](https://img.shields.io/badge/Vue-3.x-4FC08D?logo=vue.js)](https://vuejs.org/)
 [![Vant](https://img.shields.io/badge/Vant-4.x-1989FA?logo=vant)](https://vant-contrib.gitee.io/vant/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-06B6D4?logo=tailwind-css)](https://tailwindcss.com/)
