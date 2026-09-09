@@ -32,7 +32,7 @@
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "vitest",
+    "test": "vitest run",
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage",
     "create:component": "node scripts/create-component.js",
@@ -48,7 +48,8 @@
   },
   "peerDependencies": {
     "vant": "^4.0.0",
-    "vue": "^3.4.0"
+    "vue": "^3.4.0",
+    "remixicon": "^4.0.0"
   },
   "lint-staged": {
     "*.{js,vue}": [
@@ -94,6 +95,7 @@
     "vite-plugin-dts": "^4.5.4",
     "vite-plugin-vue-devtools": "^7.0.0",
     "vitest": "^1.0.0",
-    "vue-eslint-parser": "^9.0.0"
+    "vue-eslint-parser": "^9.0.0",
+    "remixicon": "^4.9.1"
   }
 }

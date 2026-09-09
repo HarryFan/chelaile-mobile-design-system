@@ -60,7 +60,7 @@ const { value, hasValue, handleInput, handleCompositionStart, handleCompositionE
 <template>
   <div :class="['cl-search-bar', { 'is-disabled': disabled }]">
     <label class="cl-search-bar__label" :for="inputId">{{ label }}</label>
-    <span class="cl-search-bar__icon" aria-hidden="true">⌕</span>
+    <i class="cl-icon cl-search-bar__icon ri-search-line" aria-hidden="true" />
     <input
       :id="inputId"
       class="cl-search-bar__input"
@@ -82,7 +82,7 @@ const { value, hasValue, handleInput, handleCompositionStart, handleCompositionE
       aria-label="清除搜尋"
       @click="clear"
     >
-      ×
+      <i class="cl-icon ri-close-circle-fill" aria-hidden="true" />
     </button>
   </div>
 </template>
@@ -90,6 +90,7 @@ const { value, hasValue, handleInput, handleCompositionStart, handleCompositionE
 <!-- 不用 scoped：class 命名走 BEM，與 React 版共用同一套 cl-* 選擇器 -->
 <style>
 .cl-search-bar {
+  position: relative;
   display: flex;
   align-items: center;
   gap: var(--cl-space-sm);
@@ -123,15 +124,21 @@ const { value, hasValue, handleInput, handleCompositionStart, handleCompositionE
   border: 0;
 }
 
+/* 圖示絕對定位在欄位內左側，input 留出 padding-left 讓文字不壓到圖示 */
 .cl-search-bar__icon {
+  position: absolute;
+  left: var(--cl-space-md);
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--cl-text-secondary);
   font-size: 18px;
-  line-height: 1;
+  pointer-events: none;
 }
 
 .cl-search-bar__input {
   flex: 1;
   min-width: 0;
+  padding-left: calc(18px + var(--cl-space-sm));
   border: none;
   outline: none;
   background: transparent;
@@ -155,11 +162,11 @@ const { value, hasValue, handleInput, handleCompositionStart, handleCompositionE
   justify-content: center;
   width: 20px;
   height: 20px;
+  padding: 0;
   border: none;
-  border-radius: 50%;
-  background: var(--cl-border);
-  color: var(--cl-card-background);
-  font-size: 14px;
+  background: transparent;
+  color: var(--cl-text-secondary);
+  font-size: 18px;
   line-height: 1;
   cursor: pointer;
 }

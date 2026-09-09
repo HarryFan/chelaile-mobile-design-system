@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/vue3';
 import 'vant/lib/index.css';
 import '../src/style.css';
+import 'remixicon/fonts/remixicon.css';
 
 const preview: Preview = {
   parameters: {

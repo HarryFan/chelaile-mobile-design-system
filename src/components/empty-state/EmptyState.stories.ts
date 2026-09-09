@@ -17,7 +17,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-/** 什麼都不給時的預設樣子：📭 + 「暫無資料」。 */
+/** 什麼都不給時的預設樣子：`ri-inbox-line` 圖示 + 「暫無資料」。 */
 export const 預設: Story = {};
 
 export const 含說明: Story = {
@@ -34,5 +34,5 @@ export const 含操作: Story = {
 };
 
 export const 自訂圖示: Story = {
-  args: { icon: '🚌', title: '目前沒有班次', description: '末班車已發出，明日 05:30 恢復營運' },
+  args: { icon: 'ri-bus-line', title: '目前沒有班次', description: '末班車已發出，明日 05:30 恢復營運' },
 };

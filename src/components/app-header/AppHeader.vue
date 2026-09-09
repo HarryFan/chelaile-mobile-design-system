@@ -41,7 +41,7 @@ const { rootClass, hasLeft, showBackButton, hasTitle } = useAppHeader({
         :aria-label="backLabel"
         @click="emit('back')"
       >
-        <span aria-hidden="true">‹</span>
+        <i class="cl-icon ri-arrow-left-s-line" aria-hidden="true" />
       </button>
     </div>
 
@@ -92,7 +92,7 @@ const { rootClass, hasLeft, showBackButton, hasTitle } = useAppHeader({
   border: 0;
   background: transparent;
   color: var(--cl-text);
-  font-size: 28px;
+  font-size: 24px;
   line-height: 1;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;

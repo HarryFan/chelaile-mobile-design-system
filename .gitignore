@@ -56,3 +56,5 @@ coverage
 
 # 手動備份檔
 *.bak-*
+storybook-static/
+.gstack/

@@ -10,19 +10,19 @@
 
 本設計系統是基於「車來了 App」的移動端組件庫，採用現代前端技術棧構建，專注於提供一致、高效且美觀的用戶界面。
 
-## ✨ 功能特點
+## 功能特點
 
-- 🎨 **統一的設計語言**：遵循車來了品牌規範，提供一致的視覺體驗
-- 📱 **移動優先**：專為移動設備優化，完美適配各種屏幕尺寸
-- ⚡ **現代化開發**：基於 Vue 3 組合式 API 構建，開發更高效
-- 🛠️ **元件庫**：8 個元件（Button、SearchBar、StatusCard、StationCard、TabBar、AppHeader、EmptyState、Loading），與 React 版 API 逐字一致
-- 🎨 **主題定制**：支持靈活的主題配置，一鍵切換品牌風格
-- 🚀 **極致性能**：按需加載，體積輕量，加載迅速
-- 🔍 **Storybook 文件**：元件皆有 story，可視覺化檢視各狀態
-- 🧪 **單元測試**：每個元件皆為行為測試（Vitest + Vue Test Utils），不只 render
-- 🛠️ **TypeScript**：`<script setup lang="ts">`，build 產出 `dist/index.d.ts`
+- **統一的設計語言**：遵循車來了品牌規範，提供一致的視覺體驗
+- **移動優先**：專為移動設備優化，完美適配各種屏幕尺寸
+- **現代化開發**：基於 Vue 3 組合式 API 構建，開發更高效
+- **元件庫**：8 個元件（Button、SearchBar、StatusCard、StationCard、TabBar、AppHeader、EmptyState、Loading），與 React 版 API 逐字一致
+- **主題定制**：支持靈活的主題配置，一鍵切換品牌風格
+- **極致性能**：按需加載，體積輕量，加載迅速
+- **Storybook 文件**：元件皆有 story，可視覺化檢視各狀態
+- **單元測試**：每個元件皆為行為測試（Vitest + Vue Test Utils），不只 render
+- **TypeScript**：`<script setup lang="ts">`，build 產出 `dist/index.d.ts`
 
-## 🚀 技術棧
+## 技術棧
 
 - **框架**: Vue 3
 - **組件庫**: Vant 4
@@ -31,7 +31,7 @@
 - **語言**: TypeScript
 - **代碼規範**: ESLint + Prettier
 
-## 🎨 設計規範
+## 設計規範
 
 ### 主題配色
 
@@ -115,7 +115,7 @@
 | --transition-normal | 0.3s | 常規過渡 |
 | --transition-slow | 0.5s | 頁面切換 |
 
-## 🧱 組件清單
+## 組件清單
 
 8 個元件，與 React 版（[chelaile-design-system-react](https://github.com/HarryFan/chelaile-design-system-react)）props / 事件 / class 命名 / a11y 語意逐字一致。單一 API 真相在 `./COMPONENT-SPEC.md`，改 API 先改規格再改兩邊。
 
@@ -137,7 +137,7 @@
 
 不在本輪範圍：地圖類（MapOverlayPOI / MapControl / MapMarker）、RoutePlanner、NewsFeedCard、Toast / Dialog（暫用 Vant 或 app 層）、dark mode token。
 
-## 🔧 組件開發指南
+## 組件開發指南
 
 ### 創建新組件
 
@@ -187,7 +187,7 @@ components/
    - 自定義樣式使用 CSS 變量
    - 響應式設計使用 Tailwind 斷點前綴
 
-## 🎨 主題定製
+## 主題定製
 
 ### 顏色主題
 
@@ -256,7 +256,7 @@ module.exports = {
 | `xl` | 1280px | 桌面 |
 | `2xl` | 1536px | 大屏幕 |
 
-## 📦 安裝
+## 安裝
 
 ```bash
 # 安裝依賴
@@ -278,7 +278,7 @@ npm run test
 npm run storybook
 ```
 
-## 🛠️ 組件使用示例
+## 組件使用示例
 
 ### 當作套件使用
 
@@ -320,13 +320,13 @@ createApp(App).use(ChelaileDesignSystem); // 全域註冊為 ClButton / ClStatio
 ```vue
 <template>
   <TabBar v-model="active" :items="[
-    { key: 'map', label: '地圖', icon: '🗺️' },
-    { key: 'search', label: '搜尋', icon: '🔍', badge: 120 },
+    { key: 'map', label: '地圖', icon: 'ri-map-2-line' },
+    { key: 'search', label: '搜尋', icon: 'ri-search-line', badge: 120 },
   ]" />
 </template>
 ```
 
-## 🎨 主題定制
+## 主題定制
 
 本設計系統支持通過修改 `tailwind.config.js` 中的主題變量來進行主題定制。
 
@@ -348,7 +348,7 @@ module.exports = {
 };
 ```
 
-## 📝 開發規範
+## 開發規範
 
 ### 組件開發
 
@@ -373,7 +373,7 @@ module.exports = {
 - 使用 Conventional Commits 規範
 - 提交前運行 `npm run lint` 和 `npm run test`
 
-## 🤝 貢獻指南
+## 貢獻指南
 
 歡迎提交 Issue 和 PR，請確保：
 
@@ -381,6 +381,6 @@ module.exports = {
 2. 添加適當的測試
 3. 更新相關文檔
 
-## 📄 許可證
+## 許可證
 
 MIT

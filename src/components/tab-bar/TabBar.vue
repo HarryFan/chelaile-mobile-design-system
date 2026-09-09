@@ -43,7 +43,7 @@ const { rootClass, getItemProps } = useTabBar({
           @click="getItemProps(item).onClick()"
           @keydown="getItemProps(item).onKeydown($event)"
         >
-          <span v-if="item.icon" class="cl-tab-bar__icon" aria-hidden="true">{{ item.icon }}</span>
+          <i v-if="item.icon" :class="['cl-icon', 'cl-tab-bar__icon', item.icon]" aria-hidden="true" />
           <span class="cl-tab-bar__label">{{ item.label }}</span>
           <span
             v-if="getItemProps(item).badgeText"
@@ -107,8 +107,7 @@ const { rootClass, getItemProps } = useTabBar({
 }
 
 .cl-tab-bar__icon {
-  font-size: 20px;
-  line-height: 1;
+  font-size: 22px;
 }
 
 .cl-tab-bar__label {

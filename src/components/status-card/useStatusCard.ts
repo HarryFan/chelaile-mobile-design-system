@@ -2,11 +2,12 @@ import { computed, type ComputedRef } from 'vue';
 
 export type StatusTone = 'success' | 'warning' | 'danger' | 'info';
 
+/** 每種 tone 對應的 Remix Icon class */
 const TONE_ICON: Record<StatusTone, string> = {
-  success: '✓',
-  warning: '!',
-  danger: '×',
-  info: 'i',
+  success: 'ri-checkbox-circle-fill',
+  warning: 'ri-error-warning-fill',
+  danger: 'ri-close-circle-fill',
+  info: 'ri-information-fill',
 };
 
 export interface UseStatusCardOptions {

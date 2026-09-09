@@ -29,7 +29,7 @@ const { hasDistance, isEmpty, rootClass, buses, emptyText } = useStationCard({
     <div class="cl-station-card__header">
       <h3 class="cl-station-card__name">{{ stationName }}</h3>
       <!-- 空值占位由父層負責：沒給 distance 就不渲染，元件不自己補 -- -->
-      <span v-if="hasDistance" class="cl-station-card__distance">{{ distance }}</span>
+      <span v-if="hasDistance" class="cl-station-card__distance"><i class="cl-icon ri-map-pin-line" aria-hidden="true" />{{ distance }}</span>
     </div>
 
     <p v-if="isEmpty" class="cl-station-card__empty">{{ emptyText }}</p>
@@ -80,6 +80,9 @@ const { hasDistance, isEmpty, rootClass, buses, emptyText } = useStationCard({
 
 .cl-station-card__distance {
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
   font-size: var(--cl-font-size-caption);
   line-height: var(--cl-line-height-caption);
   color: var(--cl-text-secondary);

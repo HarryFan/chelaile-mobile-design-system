@@ -45,8 +45,25 @@ describe('StatusCard', () => {
     expect(fallback.classes()).toContain('cl-status-card--info');
   });
 
-  it('icon 對輔助技術隱藏', () => {
+  it('icon 對輔助技術隱藏，且不含文字', () => {
     const wrapper = mount(StatusCard, { props: { title: '定位成功' } });
-    expect(wrapper.find('.cl-status-card__icon').attributes('aria-hidden')).toBe('true');
+    const icon = wrapper.find('.cl-status-card__icon');
+    expect(icon.attributes('aria-hidden')).toBe('true');
+    expect(icon.text()).toBe('');
+  });
+
+  it('每種 tone 對應正確的 Remix Icon class', () => {
+    const expected = {
+      success: 'ri-checkbox-circle-fill',
+      warning: 'ri-error-warning-fill',
+      danger: 'ri-close-circle-fill',
+      info: 'ri-information-fill',
+    } as const;
+    for (const [tone, cls] of Object.entries(expected)) {
+      const wrapper = mount(StatusCard, { props: { tone: tone as keyof typeof expected, title: tone } });
+      const icon = wrapper.find('i.cl-status-card__icon');
+      expect(icon.classes()).toContain('cl-icon');
+      expect(icon.classes()).toContain(cls);
+    }
   });
 });

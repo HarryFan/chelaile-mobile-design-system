@@ -3,6 +3,37 @@
 > 開發脈絡紀錄。每一輪寫：起點是什麼狀態、做了什麼決定、哪裡卡、**AI 哪裡判斷錯、怎麼發現、怎麼修**。
 > 這份不是 changelog（那看 git log），是「為什麼這樣走」。時間倒序。
 
+## 第三輪 · 2026-09-09 深夜 — 旗艦版 demo 頁、Remix Icon 取代 emoji（Claude Code / Claude Fable 5.1）
+
+### 起點
+
+第二輪結束時 demo 還是舊的 Vant 兩頁 app（`App.vue` 硬編碼 van-tabbar、`views/Home|About|Discover`，Discover 甚至是另一個書店專案的殘留），另一個 session 在根目錄又放了一份 emoji 版 `demo/`。TabBar story 用 emoji，StatusCard 用 ✓ × ! i 文字符號。要拿去面試，這兩件事都不行：emoji 在不同平台長得不一樣、也沒有一致的視覺重量；文字符號則根本不是 icon。
+
+### 決定
+
+- **Icon 一律 Remix Icon 字型**（`ri-*` class）。`icon` prop 仍收字串，只是字串從 emoji 變成 class 名；元件渲染 `<i class="cl-icon ri-…" aria-hidden>`。元件內建圖示（StatusCard 四種 tone、AppHeader 返回、SearchBar 放大鏡與清除、StationCard 距離）也走 Remix。規格 §0 加 icon 列，AGENTS.md 原本「不綁 icon 庫」那條改掉。
+- **字型不打進 lib css**。第一版把 `remixicon.css` import 進 `src/index.ts`，`vite build` 後 `style.css` 變 6.5 MB：Vite lib 模式會把 css 引用的字型全部 inline 成 data URI，`assetsInlineLimit` 對它沒用。改成 `remixicon` 當 peerDependency，使用端、demo 入口、Storybook preview 各自 import 一次。
+- **Demo 頁與 Vue 版逐字相同**：`src/demo/demo.css` 是 React `demo/demo.css` 的 byte-identical 複本（`cmp` 過），`src/App.vue` 與 React `demo/App.tsx` 同結構、同 class、同文案、同 icon，只差語法層。頁面：sticky 導覽列 + hero（左文案與三個數字、右手機框內的可互動 app：四個 tab 切換不同畫面、搜尋會過濾站牌、overlay loading）+ 8 元件卡片（每張標題旁一句最重要的設計決策）+ token 表（色票 / 字級 / 間距）+ 規範四格 + 五件套目錄樹。
+- **StatusCard icon 樣式兩邊對齊**：React agent 做成 40px 淡色圓底 + 20px tone 色 icon（`color-mix`），Vue agent 做成裸 icon；主線裁定用 React 版，本 repo 補齊。這種「兩個 agent 各自合理但不一致」的情況，只能靠主線最後對 diff。
+
+### 數字
+
+- 測試 59 → 62（換 icon 的元件各加一個「icon class 有掛上」的測試）。
+- `vitest`、`vite build`、`storybook build` 全綠。
+- 刪除：`src/router/`、`src/store/`、`src/views/`、`src/utils/performance.ts`、根目錄孤兒 `demo/`。`main.js` 只剩 createApp + 註冊元件庫 + mount。
+- Tailwind preflight 會把 h3 字重重設成 inherit，`App.vue` 補一條非 scoped 覆寫；React 端沒 Tailwind 所以不需要。這是兩邊唯一的樣式差異。
+- `src/`（AudioPlayer 除外）、README 全文 grep 不到任何 emoji；README 標題與條列的 ✨🚀🎨 一併拿掉。
+
+### 下一輪
+
+- Demo 頁的 hero 手機框在 <480px 會縮成 700px 高，還沒在真機看過。
+- Storybook 的 a11y addon 仍未裝。
+- `pnpm-lock.yaml` 與 `package-lock.json` 並存，要選一個。
+- `pinia`、`vue-router`、`@iconify/vue` 已無人 import，可從 dependencies 移除（本輪未動 deps）。
+- `vite.config.js` 的 AutoImport 仍列 vue-router / pinia，跟著一起清。
+
+---
+
 ## 第二輪 · 2026-09-09 下午 — 補齊 8 個元件、接線、發布面（Claude Code / Claude Fable 5.1）
 
 ### 起點診斷（與第一輪手札對照）

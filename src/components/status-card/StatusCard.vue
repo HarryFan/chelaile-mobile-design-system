@@ -31,7 +31,7 @@ const { icon, role, ariaLive, toneClass } = useStatusCard({
 
 <template>
   <div :class="['cl-status-card', toneClass]" :role="role" :aria-live="ariaLive">
-    <span class="cl-status-card__icon" aria-hidden="true">{{ icon }}</span>
+    <i :class="['cl-icon', 'cl-status-card__icon', icon]" aria-hidden="true" />
 
     <div class="cl-status-card__body">
       <h3 class="cl-status-card__title">{{ title }}</h3>
@@ -62,21 +62,18 @@ const { icon, role, ariaLive, toneClass } = useStatusCard({
 
 .cl-status-card__icon {
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   font-size: 20px;
-  font-weight: 700;
-  color: #fff;
+  color: var(--cl-status-card-tone);
+  background: color-mix(in srgb, var(--cl-status-card-tone) 12%, transparent);
 }
 
-.cl-status-card--success .cl-status-card__icon { background: var(--cl-success); }
-.cl-status-card--warning .cl-status-card__icon { background: var(--cl-warning); }
-.cl-status-card--danger  .cl-status-card__icon { background: var(--cl-danger); }
-.cl-status-card--info    .cl-status-card__icon { background: var(--cl-info); }
+.cl-status-card--success { --cl-status-card-tone: var(--cl-success); }
+.cl-status-card--warning { --cl-status-card-tone: var(--cl-warning); }
+.cl-status-card--danger  { --cl-status-card-tone: var(--cl-danger); }
+.cl-status-card--info    { --cl-status-card-tone: var(--cl-info); }
 
 .cl-status-card__body {
   flex: 1;

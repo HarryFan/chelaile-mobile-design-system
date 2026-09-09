@@ -6,7 +6,7 @@ import { useEmptyState } from './useEmptyState';
 const props = withDefaults(defineProps<EmptyStateProps>(), {
   title: '暫無資料',
   description: undefined,
-  icon: '📭',
+  icon: 'ri-inbox-line',
   actionText: undefined,
 });
 
@@ -28,7 +28,7 @@ const { rootClass, hasDescription, hasAction } = useEmptyState({
 <template>
   <!-- role="status"：列表從「有資料」變成「沒資料」時，螢幕閱讀器會在當前朗讀結束後補上 -->
   <div :class="rootClass" role="status">
-    <span class="cl-empty-state__icon" aria-hidden="true">{{ icon }}</span>
+    <i :class="['cl-icon', 'cl-empty-state__icon', icon]" aria-hidden="true" />
 
     <p class="cl-empty-state__title">{{ title }}</p>
 
@@ -54,9 +54,8 @@ const { rootClass, hasDescription, hasAction } = useEmptyState({
 }
 
 .cl-empty-state__icon {
-  display: block;
   font-size: 48px;
-  line-height: 1;
+  color: var(--cl-text-placeholder);
   margin-bottom: var(--cl-space-xs);
 }
 

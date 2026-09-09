@@ -4,9 +4,9 @@ import TabBar from '../TabBar.vue';
 import { formatBadge, type TabBarItem } from '../useTabBar';
 
 const items: TabBarItem[] = [
-  { key: 'home', label: '首頁', icon: '🏠' },
-  { key: 'nearby', label: '附近', icon: '📍' },
-  { key: 'me', label: '我的', icon: '👤' },
+  { key: 'home', label: '首頁', icon: 'ri-home-5-line' },
+  { key: 'nearby', label: '附近', icon: 'ri-map-pin-2-line' },
+  { key: 'me', label: '我的', icon: 'ri-user-3-line' },
 ];
 
 const tabByKey = (wrapper: ReturnType<typeof mount>, key: string) =>
@@ -72,6 +72,18 @@ describe('TabBar', () => {
       },
     });
     expect(wrapper.find('.cl-tab-bar__badge').exists()).toBe(false);
+  });
+
+  it('icon 渲染成 Remix Icon class，沒給 icon 就不渲染', () => {
+    const wrapper = mount(TabBar, {
+      props: { items: [{ key: 'home', label: '首頁', icon: 'ri-home-5-line' }, { key: 'plain', label: '純文字' }], modelValue: 'home' },
+    });
+    const icon = tabByKey(wrapper, 'home').find('i.cl-tab-bar__icon');
+    expect(icon.exists()).toBe(true);
+    expect(icon.classes()).toContain('cl-icon');
+    expect(icon.classes()).toContain('ri-home-5-line');
+    expect(icon.attributes('aria-hidden')).toBe('true');
+    expect(tabByKey(wrapper, 'plain').find('.cl-tab-bar__icon').exists()).toBe(false);
   });
 
   it('formatBadge 的邊界值', () => {

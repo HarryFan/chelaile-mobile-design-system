@@ -5,7 +5,7 @@ export interface EmptyStateProps {
   title?: string;
   /** 補充說明。父層若可能拿到空值，請自行擋掉再傳入 */
   description?: string;
-  /** 裝飾用圖示（emoji 或單一字元），對輔助科技隱藏 */
+  /** 裝飾用圖示：Remix Icon class 字串（如 `ri-bus-line`），預設 `ri-inbox-line`，對輔助科技隱藏 */
   icon?: string;
   /** 有給 actionText 才會顯示按鈕 */
   actionText?: string;

@@ -34,11 +34,18 @@ describe('EmptyState', () => {
     expect(wrapper.emitted('action')).toHaveLength(1);
   });
 
-  it('icon 對輔助科技隱藏，避免螢幕閱讀器唸出 emoji 名稱', () => {
-    const wrapper = mount(EmptyState, { props: { icon: '🚌' } });
-    const icon = wrapper.find('.cl-empty-state__icon');
+  it('icon 對輔助科技隱藏，並套用傳入的 Remix Icon class', () => {
+    const wrapper = mount(EmptyState, { props: { icon: 'ri-bus-line' } });
+    const icon = wrapper.find('i.cl-empty-state__icon');
     expect(icon.attributes('aria-hidden')).toBe('true');
-    expect(icon.text()).toBe('🚌');
+    expect(icon.classes()).toContain('cl-icon');
+    expect(icon.classes()).toContain('ri-bus-line');
+    expect(icon.text()).toBe('');
+  });
+
+  it('沒給 icon 時預設用 ri-inbox-line', () => {
+    const wrapper = mount(EmptyState);
+    expect(wrapper.find('.cl-empty-state__icon').classes()).toContain('ri-inbox-line');
   });
 
   it('外部 class 會合併到 root 上，讓使用端可覆寫樣式', () => {
