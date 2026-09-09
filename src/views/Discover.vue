@@ -98,8 +98,8 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { BookService } from '../services/bookService';
-import AppLoading from '../components/Loading.vue';
-import EmptyState from '../components/EmptyState.vue';
+import { Loading as AppLoading } from '../components/loading';
+import { EmptyState } from '../components/empty-state';
 
 export default {
   name: 'Discover',

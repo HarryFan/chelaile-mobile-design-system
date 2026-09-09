@@ -1,9 +1,13 @@
+/* 設計 token（--cl-*），與 React 版共用 */
+@import './styles/tokens.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* 自定義基礎樣式 */
 @layer base {
+  /* 舊的 RGB 三元組保留為別名，避免既有 Tailwind class 壞掉；新元件一律用 --cl-* */
   :root {
     --color-primary: 45, 109, 255;
     --color-warning: 255, 77, 79;

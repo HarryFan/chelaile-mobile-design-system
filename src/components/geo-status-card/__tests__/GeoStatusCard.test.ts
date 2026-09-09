@@ -1,78 +1,48 @@
 import { mount } from '@vue/test-utils';
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import GeoStatusCard from '../GeoStatusCard.vue';
 
-describe('GeoStatusCard', () => {
-  it('renders with default props', () => {
-    const wrapper = mount(GeoStatusCard, {
-      props: {
-        title: 'Test Title',
-      },
-    });
-
+describe('GeoStatusCard（StatusCard 薄包裝）', () => {
+  it('預設 props：顯示標題、success tone、不顯示按鈕', () => {
+    const wrapper = mount(GeoStatusCard, { props: { title: 'Test Title' } });
     expect(wrapper.text()).toContain('Test Title');
-    expect(wrapper.find('.van-icon-success').exists()).toBe(true);
-    expect(wrapper.find('.van-button').exists()).toBe(false);
+    expect(wrapper.classes()).toContain('cl-status-card--success');
+    expect(wrapper.find('button').exists()).toBe(false);
   });
 
-  it('displays status text when provided', () => {
-    const wrapper = mount(GeoStatusCard, {
-      props: {
-        title: 'Test',
-        statusText: 'Custom status text',
-      },
-    });
-
-    expect(wrapper.text()).toContain('Custom status text');
+  it('statusText 映射到 description', () => {
+    const wrapper = mount(GeoStatusCard, { props: { title: 'Test', statusText: 'Custom status text' } });
+    expect(wrapper.find('.cl-status-card__desc').text()).toBe('Custom status text');
   });
 
-  it('shows action button when showAction is true', () => {
-    const wrapper = mount(GeoStatusCard, {
-      props: {
-        title: 'Test',
-        showAction: true,
-      },
-    });
-
-    const button = wrapper.find('.van-button');
+  it('showAction 為 true 才顯示按鈕，預設文字「查看」', () => {
+    const wrapper = mount(GeoStatusCard, { props: { title: 'Test', showAction: true } });
+    const button = wrapper.find('button');
     expect(button.exists()).toBe(true);
     expect(button.text()).toBe('查看');
   });
 
-  it('emits action event when button is clicked', async () => {
-    const wrapper = mount(GeoStatusCard, {
-      props: {
-        title: 'Test',
-        showAction: true,
-      },
-    });
-
-    await wrapper.find('.van-button').trigger('click');
+  it('點擊按鈕 emit action', async () => {
+    const wrapper = mount(GeoStatusCard, { props: { title: 'Test', showAction: true } });
+    await wrapper.find('button').trigger('click');
     expect(wrapper.emitted()).toHaveProperty('action');
   });
 
-  it('applies correct status classes', () => {
-    const wrapper = mount(GeoStatusCard, {
-      props: {
-        title: 'Test',
-        status: 'error',
-      },
-    });
-
-    const statusIcon = wrapper.find('.w-12');
-    expect(statusIcon.classes()).toContain('bg-red-50');
-    expect(statusIcon.classes()).toContain('text-red-500');
+  it('status=error 映射為 danger tone 與 role=alert', () => {
+    const wrapper = mount(GeoStatusCard, { props: { title: 'Test', status: 'error' } });
+    expect(wrapper.classes()).toContain('cl-status-card--danger');
+    expect(wrapper.attributes('role')).toBe('alert');
   });
 
-  it('displays custom action text', () => {
-    const wrapper = mount(GeoStatusCard, {
-      props: {
-        title: 'Test',
-        showAction: true,
-        actionText: 'Custom Action',
-      },
-    });
+  it('status=loading 映射為 info tone', () => {
+    const wrapper = mount(GeoStatusCard, { props: { title: 'Test', status: 'loading' } });
+    expect(wrapper.classes()).toContain('cl-status-card--info');
+  });
 
-    expect(wrapper.find('.van-button').text()).toBe('Custom Action');
+  it('自訂 actionText', () => {
+    const wrapper = mount(GeoStatusCard, {
+      props: { title: 'Test', showAction: true, actionText: 'Custom Action' },
+    });
+    expect(wrapper.find('button').text()).toBe('Custom Action');
   });
 });

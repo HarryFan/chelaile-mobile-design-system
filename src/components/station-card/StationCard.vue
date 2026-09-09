@@ -1,108 +1,138 @@
+<script setup lang="ts">
+import { Button } from '../button';
+import type { StationCardProps } from './useStationCard';
+import { useStationCard } from './useStationCard';
+
+const props = withDefaults(defineProps<StationCardProps>(), {
+  distance: undefined,
+  busList: () => [],
+  actionText: undefined,
+});
+
+const emit = defineEmits<{
+  /** 使用者點擊操作按鈕 */
+  action: [];
+}>();
+
+const { hasDistance, isEmpty, rootClass, buses, emptyText } = useStationCard({
+  get distance() {
+    return props.distance;
+  },
+  get busList() {
+    return props.busList;
+  },
+});
+</script>
+
 <template>
-  <div class="station-card">
-    <div class="flex items-center justify-between mb-3">
-      <h3 class="text-lg font-medium">{{ stationName }}</h3>
-      <div class="text-sm text-text-secondary">
-        <van-icon name="location" class="mr-1" />
-        <span>{{ distance }}</span>
-      </div>
+  <div :class="rootClass">
+    <div class="cl-station-card__header">
+      <h3 class="cl-station-card__name">{{ stationName }}</h3>
+      <!-- 空值占位由父層負責：沒給 distance 就不渲染，元件不自己補 -- -->
+      <span v-if="hasDistance" class="cl-station-card__distance">{{ distance }}</span>
     </div>
-    
-    <div class="bus-list">
-      <div 
-        v-for="bus in busList" 
-        :key="bus.routeId" 
-        class="bus-tag" 
-        :class="{ 'bus-tag--highlighted': bus.isArriving }"
-      >
-        <span class="bus-route">{{ bus.routeName }}</span>
-        <span v-if="bus.arrivalTime" class="bus-time">
-          {{ bus.arrivalTime }}
-        </span>
-        <van-loading v-else size="16" type="spinner" class="ml-2" />
-      </div>
-    </div>
-    
-    <div v-if="showAction" class="mt-3 flex justify-end">
-      <van-button 
-        size="small" 
-        plain 
-        type="primary" 
-        @click="$emit('action')"
-      >
-        {{ actionText }}
-      </van-button>
+
+    <p v-if="isEmpty" class="cl-station-card__empty">{{ emptyText }}</p>
+    <ul v-else class="cl-station-card__list">
+      <li v-for="bus in buses" :key="bus.key" :class="bus.className">
+        <span class="cl-station-card__route">{{ bus.routeName }}</span>
+        <span class="cl-station-card__time">{{ bus.timeText }}</span>
+      </li>
+    </ul>
+
+    <div v-if="actionText" class="cl-station-card__footer">
+      <Button variant="secondary" size="sm" round @click="emit('action')">{{ actionText }}</Button>
     </div>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref, computed } from 'vue';
-import { Icon, Button, Loading } from 'vant';
-
-// Fix TypeScript errors by importing App type from vue
-import type { App } from 'vue';
-
-// Fix TypeScript errors by importing nextTick from vue
-import { nextTick } from 'vue';
-
-export interface BusInfo {
-  routeId: string;
-  routeName: string;
-  arrivalTime?: string;
-  isArriving?: boolean;
+<!-- 不用 scoped：class 命名走 BEM，與 React 版共用同一套 cl-* 選擇器 -->
+<style>
+.cl-station-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cl-space-sm);
+  padding: var(--cl-space-md);
+  background: var(--cl-card-background);
+  border-radius: var(--cl-radius-card);
+  box-shadow: var(--cl-shadow-card);
+  font-family: var(--cl-font-family);
+  color: var(--cl-text);
 }
 
-const props = defineProps({
-  stationName: {
-    type: String,
-    required: true
-  },
-  distance: {
-    type: String,
-    default: ''
-  },
-  busList: {
-    type: Array as () => BusInfo[],
-    default: () => []
-  },
-  showAction: {
-    type: Boolean,
-    default: false
-  },
-  actionText: {
-    type: String,
-    default: '查看詳情'
-  }
-});
-
-const emit = defineEmits(['action']);
-</script>
-
-<style scoped>
-.station-card {
-  @apply bg-white dark:bg-gray-800 rounded-card p-4 shadow-sm;
+.cl-station-card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--cl-space-sm);
 }
 
-.bus-list {
-  @apply flex flex-wrap gap-2;
+.cl-station-card__name {
+  margin: 0;
+  min-width: 0;
+  font-size: var(--cl-font-size-subtitle);
+  line-height: var(--cl-line-height-subtitle);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.bus-tag {
-  @apply flex items-center px-3 py-1.5 rounded-full text-sm 
-         bg-gray-100 dark:bg-gray-700 text-text-primary 
-         transition-colors;
+.cl-station-card__distance {
+  flex-shrink: 0;
+  font-size: var(--cl-font-size-caption);
+  line-height: var(--cl-line-height-caption);
+  color: var(--cl-text-secondary);
 }
 
-.bus-tag--highlighted {
-  @apply bg-primary bg-opacity-10 text-primary dark:bg-opacity-20;
+.cl-station-card__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.bus-route {
-  @apply font-medium;
+.cl-station-card__bus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cl-space-sm);
+  padding: var(--cl-space-sm) 0;
+  border-top: 1px solid var(--cl-border);
+  font-size: var(--cl-font-size-body);
+  line-height: var(--cl-line-height-body);
 }
 
-.bus-time {
-  @apply ml-2 text-xs text-text-secondary;
+.cl-station-card__route {
+  min-width: 0;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cl-station-card__time {
+  flex-shrink: 0;
+  color: var(--cl-text-secondary);
+}
+
+/* 即將進站：時間用品牌色強調，讓使用者一眼掃到 */
+.cl-station-card__bus.is-arriving .cl-station-card__time {
+  color: var(--cl-primary);
+  font-weight: 600;
+}
+
+.cl-station-card__empty {
+  margin: 0;
+  padding: var(--cl-space-md) 0;
+  text-align: center;
+  font-size: var(--cl-font-size-body);
+  line-height: var(--cl-line-height-body);
+  color: var(--cl-text-secondary);
+}
+
+.cl-station-card__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--cl-space-xs);
 }
 </style>

@@ -1,34 +1,70 @@
-// Fix TypeScript errors by using any type for App
-import type { App as VueApp } from 'vue';
-import GeoStatusCard from './geo-status-card/GeoStatusCard.vue';
-import StationCard from './station-card/StationCard.vue';
+import type { App } from 'vue';
 
-// 所有組件
-const components = [
-  GeoStatusCard,
-  StationCard,
-  // 其他組件將在這裡添加
-];
-
-// 全局註冊所有組件
-const install = (app: VueApp) => {
-  components.forEach(component => {
-    if ('install' in component) {
-      // @ts-ignore
-      app.use(component);
-    } else if ('name' in component) {
-      // @ts-ignore
-      app.component(component.name || '', component);
-    }
-  });
-};
+// 元件清單與 ../../COMPONENT-SPEC.md 第 2 節一致，React 版同步維護
+import ButtonPlugin, { Button, useButton } from './button';
+import SearchBarPlugin, { SearchBar, useSearchBar } from './search-bar';
+import StatusCardPlugin, { StatusCard, useStatusCard } from './status-card';
+import GeoStatusCardPlugin, { GeoStatusCard } from './geo-status-card';
+import StationCardPlugin, { StationCard, useStationCard, UPDATING_TEXT, EMPTY_TEXT } from './station-card';
+import TabBarPlugin, { TabBar, useTabBar, formatBadge } from './tab-bar';
+import AppHeaderPlugin, { AppHeader, useAppHeader } from './app-header';
+import EmptyStatePlugin, { EmptyState, useEmptyState } from './empty-state';
+import LoadingPlugin, { Loading, useLoading } from './loading';
 
 export {
+  Button,
+  useButton,
+  SearchBar,
+  useSearchBar,
+  StatusCard,
+  useStatusCard,
   GeoStatusCard,
   StationCard,
-  // 其他組件導出將在這裡添加
+  useStationCard,
+  UPDATING_TEXT,
+  EMPTY_TEXT,
+  TabBar,
+  useTabBar,
+  formatBadge,
+  AppHeader,
+  useAppHeader,
+  EmptyState,
+  useEmptyState,
+  Loading,
+  useLoading,
 };
 
-export default {
-  install,
+export type { ButtonProps, ButtonVariant, ButtonSize, ButtonHtmlType, UseButtonOptions, UseButtonReturn } from './button';
+export type { SearchBarProps, UseSearchBarOptions, UseSearchBarReturn } from './search-bar';
+export type { StatusCardProps, StatusTone, UseStatusCardOptions, UseStatusCardReturn } from './status-card';
+export type { GeoStatusCardProps, GeoStatus } from './geo-status-card';
+export type {
+  StationCardProps,
+  BusInfo,
+  UseStationCardOptions,
+  UseStationCardReturn,
+  StationCardBusView,
+} from './station-card';
+export type { TabBarProps, TabBarItem, UseTabBarOptions, UseTabBarReturn, TabBarItemBindings } from './tab-bar';
+export type { AppHeaderProps, UseAppHeaderOptions, UseAppHeaderReturn } from './app-header';
+export type { EmptyStateProps, UseEmptyStateOptions, UseEmptyStateReturn } from './empty-state';
+export type { LoadingProps, LoadingSize, UseLoadingOptions, UseLoadingReturn } from './loading';
+
+const plugins = [
+  ButtonPlugin,
+  SearchBarPlugin,
+  StatusCardPlugin,
+  GeoStatusCardPlugin,
+  StationCardPlugin,
+  TabBarPlugin,
+  AppHeaderPlugin,
+  EmptyStatePlugin,
+  LoadingPlugin,
+];
+
+/** 全域註冊全部元件（ClButton / ClSearchBar / … / GeoStatusCard） */
+const install = (app: App) => {
+  plugins.forEach((plugin) => app.use(plugin));
 };
+
+export default { install };

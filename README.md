@@ -11,12 +11,12 @@
 - 🎨 **統一的設計語言**：遵循車來了品牌規範，提供一致的視覺體驗
 - 📱 **移動優先**：專為移動設備優化，完美適配各種屏幕尺寸
 - ⚡ **現代化開發**：基於 Vue 3 組合式 API 構建，開發更高效
-- 🛠️ **元件庫**：目前 8 個已實作元件（AudioPlayer、StationCard、GeoStatusCard、CommonAppHeader、CommonAppTabBar、LayoutsMainLayout、EmptyState、Loading）
+- 🛠️ **元件庫**：8 個元件（Button、SearchBar、StatusCard、StationCard、TabBar、AppHeader、EmptyState、Loading），與 React 版 API 逐字一致
 - 🎨 **主題定制**：支持靈活的主題配置，一鍵切換品牌風格
 - 🚀 **極致性能**：按需加載，體積輕量，加載迅速
 - 🔍 **Storybook 文件**：元件皆有 story，可視覺化檢視各狀態
-- 🧪 **單元測試**：GeoStatusCard、StationCard 有完整行為測試，其餘為渲染測試
-- 🛠️ **TypeScript**：新元件以 .ts 撰寫並附型別定義
+- 🧪 **單元測試**：每個元件皆為行為測試（Vitest + Vue Test Utils），不只 render
+- 🛠️ **TypeScript**：`<script setup lang="ts">`，build 產出 `dist/index.d.ts`
 
 ## 🚀 技術棧
 
@@ -113,60 +113,25 @@
 
 ## 🧱 組件清單
 
-### 導航組件
-| 組件 | 描述 | 狀態 |
-|------|------|------|
-| `AppHeader` | 應用頂部導航欄 | ✅ 已完成 |
-| `TabBar` | 底部導航欄，支持自定義圖標和徽標 | ✅ 已完成 |
-| `Sidebar` | 側邊導航欄，支持多級菜單 | 🚧 開發中 |
-| `Tabs` | 標籤頁組件，支持滾動和滑動切換 | ✅ 已完成 |
+8 個元件，與 React 版（[chelaile-design-system-react](https://github.com/HarryFan/chelaile-design-system-react)）props / 事件 / class 命名 / a11y 語意逐字一致。單一 API 真相在 `../COMPONENT-SPEC.md`，改 API 先改規格再改兩邊。
 
-### 數據展示
-| 組件 | 描述 | 狀態 |
-|------|------|------|
-| `StationCard` | 站點卡片，顯示站點信息和到站預估 | ✅ 已完成 |
-| `RouteCard` | 路線卡片，顯示路線信息和運營狀態 | 🚧 開發中 |
-| `BusArrivalTime` | 到站時間顯示組件 | ✅ 已完成 |
-| `TimeTable` | 時刻表組件，支持分頁和篩選 | ✅ 已完成 |
-| `RouteList` | 路線列表組件，支持搜索和排序 | ✅ 已完成 |
-| `Notification` | 通知提示組件，支持多種類型和自動關閉 | ✅ 已完成 |
+| 元件 | 用途 | 關鍵行為 |
+|------|------|----------|
+| `Button` | 按鈕，四種 variant 三種尺寸 | `loading` 不設 disabled attribute，改 `aria-busy` 保留焦點 |
+| `SearchBar` | 搜尋列，`v-model` 受控 | 中文輸入法組字期間不觸發 change/search；Enter 略過 debounce |
+| `StatusCard` | 狀態卡，四種 tone | `danger` → `role="alert"`，其餘 `role="status"` |
+| `GeoStatusCard` | 定位狀態卡，StatusCard 薄包裝 | `status: success/warning/error/loading` 映射到 tone |
+| `StationCard` | 站牌卡：站名、距離、班次 | `arrivalTime` 缺值顯示「更新中」文字，不放 spinner |
+| `TabBar` | 底部分頁列，`v-model` 受控 | `role="tablist"` + roving tabindex，←/→ 循環切換，badge > 99 顯示 `99+` |
+| `AppHeader` | 頁首：返回鈕、標題、左右 slot | `<header role="banner">`，沒 title 不渲染 `<h1>` |
+| `EmptyState` | 空狀態 | `role="status"`；`actionText` 有值才顯示按鈕 |
+| `Loading` | 載入指示，三尺寸、可 overlay | `role="status"` + `aria-live="polite"` |
 
-### 表單組件
-| 組件 | 描述 | 狀態 |
-|------|------|------|
-| `SearchBar` | 搜索欄組件，支持實時搜索和歷史記錄 | ✅ 已完成 |
-| `DatePicker` | 日期選擇器，支持範圍選擇 | 🚧 開發中 |
-| `TimePicker` | 時間選擇器 | 🚧 開發中 |
-| `Form` | 表單組件，支持校驗和動態表單 | 🚧 開發中 |
+每個元件都是五件套：`Pascal.vue` / `usePascal.ts` / `Pascal.stories.ts` / `__tests__/Pascal.test.ts` / `index.ts`。樣式寫在 SFC `<style>`（不 scoped），class 走 BEM `cl-<kebab>__part`，顏色只吃 `var(--cl-*)` token。
 
-### 地圖組件
-| 組件 | 描述 | 狀態 |
-|------|------|------|
-| `Map` | 地圖組件，集成高德地圖 | ✅ 已完成 |
-| `MapControl` | 地圖控制組件，包含縮放、定位等控制項 | ✅ 已完成 |
-| `MapMarker` | 地圖標記點組件 | ✅ 已完成 |
-| `RouteLine` | 路線繪製組件 | 🚧 開發中 |
+**空值占位由父層負責**：元件不自己渲染 `--`。
 
-### 反饋組件
-| 組件 | 描述 | 狀態 |
-|------|------|------|
-| `Toast` | 輕提示組件 | ✅ 已完成 |
-| `Dialog` | 對話框組件 | ✅ 已完成 |
-| `ActionSheet` | 動作面板 | ✅ 已完成 |
-| `Loading` | 加載指示器 | ✅ 已完成 |
-
-### 其他組件
-| 組件 | 描述 | 狀態 |
-|------|------|------|
-| `GeoStatusCard` | 定位狀態卡片，顯示當前定位狀態和權限信息 | ✅ 已完成 |
-| `RouteBadge` | 路線標籤，用於顯示路線號碼和類型 | ✅ 已完成 |
-| `EmptyState` | 空狀態組件 | ✅ 已完成 |
-| `PullRefresh` | 下拉刷新組件 | ✅ 已完成 |
-
-> 狀態說明：
-> - ✅ 已完成：組件已實現並通過測試
-> - 🚧 開發中：正在開發中的組件
-> - ⏳ 計劃中：計劃開發的組件
+不在本輪範圍：地圖類（MapOverlayPOI / MapControl / MapMarker）、RoutePlanner、NewsFeedCard、Toast / Dialog（暫用 Vant 或 app 層）、dark mode token。
 
 ## 🔧 組件開發指南
 
@@ -311,52 +276,50 @@ npm run storybook
 
 ## 🛠️ 組件使用示例
 
-### StationCard 站點卡片
+### 當作套件使用
+
+```ts
+import { createApp } from 'vue';
+import ChelaileDesignSystem, { StationCard } from 'chelaile-mobile-design-system';
+import 'chelaile-mobile-design-system/style.css'; // 含 tokens，可在自家 CSS 覆寫 --cl-primary 換主題
+
+createApp(App).use(ChelaileDesignSystem); // 全域註冊為 ClButton / ClStationCard …
+```
+
+### StationCard 站牌卡片
 
 ```vue
 <template>
   <StationCard
-    :station-name="'市政府站'"
-    :distance="'320m'"
+    station-name="市政府站"
+    distance="250 公尺"
     :bus-list="[
-      { routeId: '1', routeName: '32', arrivalTime: '2分鐘', isArriving: true },
-      { routeId: '2', routeName: '262', arrivalTime: '5分鐘' },
-      { routeId: '3', routeName: '藍26', arrivalTime: '8分鐘' },
+      { routeId: '307', routeName: '307', arrivalTime: '2 分', isArriving: true },
+      { routeId: '652', routeName: '652' },
     ]"
-    show-action
-    @action="handleStationAction"
+    action-text="查看站牌"
+    @action="goStation"
   />
 </template>
-
-<script setup>
-import { StationCard } from './components';
-
-const handleStationAction = () => {
-  console.log('查看站點詳情');
-};
-</script>
 ```
 
-### GeoStatusCard 定位狀態卡片
+### SearchBar 搜尋列
 
 ```vue
 <template>
-  <GeoStatusCard
-    title="當前位置"
-    status="success"
-    status-text="定位成功"
-    :show-action="true"
-    action-text="重新定位"
-    @action="handleRelocation"
-  />
+  <SearchBar v-model="keyword" :debounce-ms="300" @search="doSearch" @clear="reset" />
 </template>
+```
 
-<script setup>
-import { GeoStatusCard } from './components';
+### TabBar 底部分頁列
 
-const handleRelocation = () => {
-  console.log('重新定位');};
-</script>
+```vue
+<template>
+  <TabBar v-model="active" :items="[
+    { key: 'map', label: '地圖', icon: '🗺️' },
+    { key: 'search', label: '搜尋', icon: '🔍', badge: 120 },
+  ]" />
+</template>
 ```
 
 ## 🎨 主題定制

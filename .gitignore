@@ -53,3 +53,6 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+# 手動備份檔
+*.bak-*

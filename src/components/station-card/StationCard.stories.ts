@@ -1,58 +1,46 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { StationCard } from './';
-import { ref } from 'vue';
+import StationCard from './StationCard.vue';
+import type { BusInfo } from './useStationCard';
 
-const meta: Meta<typeof StationCard> = {
-  title: 'Components/StationCard',
+const busList: BusInfo[] = [
+  { routeId: '307', routeName: '307', arrivalTime: '2 分', isArriving: true },
+  { routeId: '藍7', routeName: '藍7', arrivalTime: '8 分' },
+  { routeId: '652', routeName: '652' },
+];
+
+const meta = {
+  title: 'Business/StationCard',
   component: StationCard,
+  parameters: { layout: 'padded' },
   tags: ['autodocs'],
-  argTypes: {
-    onAction: { action: 'action' },
-  },
-  args: {
-    stationName: '市政府站',
-    distance: '320m',
-    showAction: true,
-    actionText: '查看詳情',
-  },
-};
+  args: { stationName: '市政府站', distance: '250 公尺', busList },
+} satisfies Meta<typeof StationCard>;
 
 export default meta;
+type Story = StoryObj<typeof meta>;
 
-type Story = StoryObj<typeof StationCard>;
+export const 預設: Story = {};
 
-export const Default: Story = {
+/** distance 沒給就不渲染距離區塊——空值占位由父層決定，元件不自己補 `--`。 */
+export const 無距離: Story = {
+  args: { distance: undefined },
+};
+
+/** arrivalTime 缺值顯示「更新中」文字，不用 spinner，兩邊一致好測。 */
+export const 更新中: Story = {
   args: {
     busList: [
-      { routeId: '1', routeName: '32', arrivalTime: '2分鐘', isArriving: true },
-      { routeId: '2', routeName: '262', arrivalTime: '5分鐘' },
-      { routeId: '3', routeName: '藍26', arrivalTime: '8分鐘' },
+      { routeId: '307', routeName: '307' },
+      { routeId: '652', routeName: '652' },
     ],
   },
 };
 
-export const Loading: Story = {
-  args: {
-    busList: [
-      { routeId: '1', routeName: '32', arrivalTime: undefined },
-      { routeId: '2', routeName: '262', arrivalTime: undefined },
-    ],
-  },
+export const 無班次: Story = {
+  args: { busList: [] },
 };
 
-export const SingleBus: Story = {
-  args: {
-    stationName: '松山車站',
-    distance: '150m',
-    busList: [
-      { routeId: '1', routeName: '306', arrivalTime: '即將到站', isArriving: true },
-    ],
-  },
-};
-
-export const WithoutAction: Story = {
-  args: {
-    ...Default.args,
-    showAction: false,
-  },
+/** actionText 有值才顯示 secondary / sm / round 按鈕。 */
+export const 含操作按鈕: Story = {
+  args: { actionText: '查看站牌' },
 };
