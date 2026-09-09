@@ -113,7 +113,7 @@
 
 ## 🧱 組件清單
 
-8 個元件，與 React 版（[chelaile-design-system-react](https://github.com/HarryFan/chelaile-design-system-react)）props / 事件 / class 命名 / a11y 語意逐字一致。單一 API 真相在 `../COMPONENT-SPEC.md`，改 API 先改規格再改兩邊。
+8 個元件，與 React 版（[chelaile-design-system-react](https://github.com/HarryFan/chelaile-design-system-react)）props / 事件 / class 命名 / a11y 語意逐字一致。單一 API 真相在 `./COMPONENT-SPEC.md`，改 API 先改規格再改兩邊。
 
 | 元件 | 用途 | 關鍵行為 |
 |------|------|----------|
